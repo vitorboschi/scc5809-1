@@ -1,14 +1,12 @@
 #ifndef PERCEPTRON_H
 #define PERCEPTRON_H
 
-#include "sample.h"
-
 class Perceptron {
 	public:
 	Perceptron(unsigned int inputSize);
 
-	int train(const Sample& s, float delta, int expectedOutput);
-	int evaluateData(const Sample& s);
+	int train(const int input[], float delta, int expectedOutput);
+	int evaluateData(const int input[]);
 	void resetWeights();
 
 	private:

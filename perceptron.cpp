@@ -7,8 +7,8 @@ Perceptron::Perceptron(unsigned int inputSize) {
 	resetWeights();
 }
 
-int Perceptron::train(const Sample& s, float delta, int expectedOutput) {
-	int output = evaluateData(s);
+int Perceptron::train(const int input[], float delta, int expectedOutput) {
+	int output = evaluateData(input);
 	int error = expectedOutput - output;
 	
 	if (error == 0) {
@@ -17,17 +17,17 @@ int Perceptron::train(const Sample& s, float delta, int expectedOutput) {
 
 	//else, we've got the wrong answer, so we need to adjust weights
 	for (int i=0;i<m_inputSize;i++) {
-		m_weights[i] += error * s.data[i] * delta;
+		m_weights[i] += error * input[i] * delta;
 	}
 
 	return error;
 }
 
-int Perceptron::evaluateData(const Sample& s) {
+int Perceptron::evaluateData(const int input[]) {
 	float sum = 0.0f;
 
 	for (int i=0;i<m_inputSize;i++) {
-		sum += m_weights[i] * s.data[i];
+		sum += m_weights[i] * input[i];
 	};
 	
 	//bias weight is the last element of the vector
