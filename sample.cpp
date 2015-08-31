@@ -39,5 +39,6 @@ int readSamples(const char * fileName, Sample* samples, int maxSamples) {
 		nSamples++;
 	}
 
+	file.close();
 	return nSamples;
 }
