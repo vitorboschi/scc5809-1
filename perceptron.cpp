@@ -20,6 +20,9 @@ int Perceptron::train(const int input[], float delta, int expectedOutput) {
 		m_weights[i] += error * input[i] * delta;
 	}
 
+	// adjust bias weight
+	m_weights[m_inputSize] += error * 1.0 * delta;
+
 	return error;
 }
 

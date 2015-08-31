@@ -15,11 +15,13 @@ int main(int argc, char** argv) {
 		currentCycle++;
 		cycleError = 0;
 		for (int i=0;i<nSamples;i++) {
-			cycleError += p.train(trainingData[i].input, delta, trainingData[i].result);
+			if (p.train(trainingData[i].input, delta, trainingData[i].result)) {
+				cycleError++;
+			}
 		}
-		std::cout << "\tCycle error: " << cycleError << std::endl;
+		std::cout << "\tNumber of errors in cycle: " << cycleError << std::endl;
 	}
 	
-	std::cout << "Traning concluded" << std::endl;
+	std::cout << std::endl << "Traning concluded with " << currentCycle << " cycles" << std::endl;
 	return 0;
 }
