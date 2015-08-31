@@ -2,7 +2,7 @@
 #include <cstring>
 
 Perceptron::Perceptron(unsigned int inputSize) {
-	m_weights = new float(inputSize+1); //account for bias weight
+	m_weights = new float[inputSize+1]; //account for bias weight
 	m_inputSize = inputSize;
 	resetWeights();
 }
