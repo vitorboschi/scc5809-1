@@ -17,7 +17,7 @@ void trainPerceptron() {
 
 	Sample trainingData[maxSamples];
 
-	// Read the samples from the training file
+	// Read the samples from the training file.
 	int nSamples = readSamples("trainingset.txt", trainingData, maxSamples);
 	
 	// Train the perceptron while there were errors in the previous cycle.
@@ -43,14 +43,18 @@ void trainPerceptron() {
 
 void testPerceptron() {
 	Sample testData[maxSamples];
+
+	// Read samples from the test file.
 	int nSamples = readSamples("testset.txt", testData, maxSamples);
 
 	std::cout << std::endl << "Starting classification test" << std::endl;
 
 	int errors = 0;
 	for (int i = 0; i < nSamples; i++) {
+		// Evaluate perceptron on this testcase.
 		int value = p.evaluateData(testData[i].data);
 
+		// Check if the value returned is the same as the expected one.
 		if (value == testData[i].result) {
 			// Expected Value
 			std::cout << "Test #" << (i + 1) << " correctly clasified" << std::endl;
@@ -64,11 +68,18 @@ void testPerceptron() {
 }
 
 int main(int argc, char** argv) {
+	// First train the perceptron using the training data supplied in trainingset.txt file.
 	trainPerceptron();
+
+	// Now run the trained perceptron on the testcases from the testset.txt file.
 	testPerceptron();
+
+
 #ifdef BUILD_UI
+	// Start the user interface that allows users to draw a figure on a canvas to be classified by the perceptron.
 	startUI();
 #endif
+
 	return 0;
 }
 
