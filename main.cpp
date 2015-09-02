@@ -1,8 +1,9 @@
 #include <iostream>
 #include "sample.h"
 #include "perceptron.h"
+#ifdef BUILD_UI
 #include "ui.h"
-
+#endif
 
 const int maxTrainingCycles = 100;
 const float delta = 0.01;
@@ -65,7 +66,9 @@ void testPerceptron() {
 int main(int argc, char** argv) {
 	trainPerceptron();
 	testPerceptron();
+#ifdef BUILD_UI
 	startUI();
+#endif
 	return 0;
 }
 
