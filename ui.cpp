@@ -11,6 +11,7 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 
 	if (event == cv::EVENT_LBUTTONDOWN) {
 		std::cout << "Started drawing" << std::endl;
+		*canvas = cv::Scalar(0,0,0);
 		lastX = x;
 		lastY = y;
 		isMouseDown = true;
