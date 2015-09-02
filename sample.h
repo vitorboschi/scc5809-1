@@ -4,14 +4,10 @@
 const int WIDTH = 8;
 const int HEIGHT = 8;
 
-
-class Sample {                                                                        
-public:
-	int result;                                                               
+typedef struct {
+	int result;
 	int data[WIDTH * HEIGHT];
-
-	void display();
-};
+} Sample;
 
 int readSamples(const char * fileName, Sample* samples, int maxSamples);
 
