@@ -11,30 +11,36 @@ const int maxSamples = 100;
 Perceptron p(WIDTH * HEIGHT);
 
 void trainPerceptron() {
-//	Perceptron p(WIDTH * HEIGHT);
 	int currentCycle = 0;
 	int cycleError = 100;
 
 	Sample trainingData[maxSamples];
+
+	// Read the samples from the training file
 	int nSamples = readSamples("trainingset.txt", trainingData, maxSamples);
 	
+	// Train the perceptron while there were errors in the previous cycle.
 	while (cycleError > 0 && currentCycle < maxTrainingCycles) {
 		std::cout << "Starting training cycle " << currentCycle << std::endl;
 		currentCycle++;
 		cycleError = 0;
-		for (int i=0;i<nSamples;i++) {
+
+		for (int i = 0; i < nSamples; i++) {
+			// If the error returned from this Perceptron::train call is different
+			// than 0, let's mark that there was an error in the cycle.
 			if (p.train(trainingData[i].data, delta, trainingData[i].result)) {
 				cycleError++;
 			}
 		}
+
 		std::cout << "\tNumber of errors in cycle: " << cycleError << std::endl;
 	}
 	
+	// No more errors happened during the last cycle, so the training was concluded.
 	std::cout << std::endl << "Traning concluded with " << currentCycle << " cycles" << std::endl;	
 }
 
 void testPerceptron() {
-	//Perceptron p(WIDTH * HEIGHT);
 	Sample testData[maxSamples];
 	int nSamples = readSamples("testset.txt", testData, maxSamples);
 
