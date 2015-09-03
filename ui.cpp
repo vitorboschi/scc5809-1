@@ -8,6 +8,9 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 	static bool isMouseDown = false;
 	static int lastX = 0;
 	static int lastY = 0;
+	static cv::Mat reducedImage(8, 8, CV_8UC1);
+	static cv::Mat roiImage;
+
 	cv::Mat* canvas = (cv::Mat*)parameter;
 
 	if (event == cv::EVENT_LBUTTONDOWN) {
@@ -25,13 +28,14 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 
  		std::vector<cv::Rect> boundRect( contours.size() );
 		
-		for( int i = 0; i < contours.size(); i++ ) {
-			boundRect[i] = cv::boundingRect(contours[i]);
-			cv::rectangle(*canvas, boundRect[i].tl(), boundRect[i].br(), cv::Scalar(255), 1, 8, 0 );
+		boundRect[0] = cv::boundingRect(contours[0]);
 
-		}
-
+		roiImage = (*canvas)(boundRect[0]);
+		resize(roiImage, reducedImage, reducedImage.size(), 0, 0, CV_INTER_AREA);
+		imshow("roiImage", roiImage);
 		imshow("canvas", *canvas);
+		std::cout << "Matriz: " << reducedImage << std::endl;
+		cv::rectangle(*canvas, boundRect[0].tl(), boundRect[0].br(), cv::Scalar(255), 1, 8, 0 );
 		std::cout << "End drawing" << std::endl;
 		isMouseDown = false;
 
@@ -50,6 +54,7 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 void startUI() {
 	cv::Mat	canvas = cv::Mat::ones(600, 600, CV_8UC1);
 	cv::namedWindow("canvas", 0);
+	cv::namedWindow("roiImage", 0);
 	imshow("canvas", canvas);
 	cv::setMouseCallback("canvas", onMouse, &canvas);
 	cv::waitKey(0);
