@@ -1,8 +1,18 @@
 #include "ui.h"
-
+#include "perceptron.h"
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <vector>
+
+extern Perceptron p;
+
+void mat2array(cv::Mat& m, int* a) {
+	const unsigned char* mData = m.ptr<unsigned char>();
+
+	for (int i=0;i<8*8;i++) {
+		a[i] = (mData[i] > 0) ? 1 : 0; 
+	}
+}
 
 static void onMouse( int event, int x, int y, int, void* parameter) {
 	static bool isMouseDown = false;
@@ -10,11 +20,11 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 	static int lastY = 0;
 	static cv::Mat reducedImage(8, 8, CV_8UC1);
 	static cv::Mat roiImage;
+	int testData[8*8];
 
 	cv::Mat* canvas = (cv::Mat*)parameter;
 
 	if (event == cv::EVENT_LBUTTONDOWN) {
-		std::cout << "Started drawing" << std::endl;
 		*canvas = cv::Scalar(0);
 		lastX = x;
 		lastY = y;
@@ -32,11 +42,15 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 
 		roiImage = (*canvas)(boundRect[0]);
 		resize(roiImage, reducedImage, reducedImage.size(), 0, 0, CV_INTER_AREA);
-		imshow("roiImage", roiImage);
 		imshow("canvas", *canvas);
-		std::cout << "Matriz: " << reducedImage << std::endl;
-		cv::rectangle(*canvas, boundRect[0].tl(), boundRect[0].br(), cv::Scalar(255), 1, 8, 0 );
-		std::cout << "End drawing" << std::endl;
+		mat2array(reducedImage, testData);
+		if (p.evaluateData(testData) == 1) {
+			std::cout << "Up!" << std::endl;
+		}
+		else {
+			std::cout << "Down!" << std::endl;
+		}
+
 		isMouseDown = false;
 
 
@@ -53,11 +67,8 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 
 void startUI() {
 	cv::Mat	canvas = cv::Mat::ones(600, 600, CV_8UC1);
-	cv::namedWindow("canvas", 0);
-	cv::namedWindow("roiImage", 0);
 	imshow("canvas", canvas);
 	cv::setMouseCallback("canvas", onMouse, &canvas);
 	cv::waitKey(0);
-		
 }
 
