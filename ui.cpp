@@ -42,15 +42,17 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 
 		roiImage = (*canvas)(boundRect[0]);
 		resize(roiImage, reducedImage, reducedImage.size(), 0, 0, CV_INTER_AREA);
-		imshow("canvas", *canvas);
 		mat2array(reducedImage, testData);
 		if (p.evaluateData(testData) == 1) {
 			std::cout << "Up!" << std::endl;
+			putText(*canvas, "UP!", cv::Point(10, 50), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
 		}
 		else {
 			std::cout << "Down!" << std::endl;
+			putText(*canvas, "DOWN!", cv::Point(10, 50), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
 		}
 
+		imshow("canvas", *canvas);
 		isMouseDown = false;
 
 
