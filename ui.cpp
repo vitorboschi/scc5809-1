@@ -45,11 +45,11 @@ static void onMouse( int event, int x, int y, int, void* parameter) {
 		mat2array(reducedImage, testData);
 		if (p.evaluateData(testData) == 1) {
 			std::cout << "Up!" << std::endl;
-			putText(*canvas, "UP!", cv::Point(10, 50), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
+			putText(*canvas, "/\\ UP!", cv::Point(10, 70), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
 		}
 		else {
 			std::cout << "Down!" << std::endl;
-			putText(*canvas, "DOWN!", cv::Point(10, 50), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
+			putText(*canvas, "\\/ DOWN!", cv::Point(10, 70), cv::FONT_HERSHEY_TRIPLEX, 2, cv::Scalar(255));
 		}
 
 		imshow("canvas", *canvas);

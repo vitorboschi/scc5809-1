@@ -57,13 +57,14 @@ void testPerceptron() {
 		// Check if the value returned is the same as the expected one.
 		if (value == testData[i].result) {
 			// Expected Value
-			std::cout << "Test #" << (i + 1) << " correctly clasified" << std::endl;
+			std::cout << "Testcase #" << (i + 1) << " OK - correctly clasified" << std::endl;
 		} else {
-			std::cout << "Test #" << (i + 1) << " incorrectly clasified" << std::endl;
+			std::cout << "Testcase #" << (i + 1) << " Error - incorrectly clasified" << std::endl;
 			errors++;
 		}
 	}
 
+	std::cout << std::endl;
 	std::cout << "Correctly classifield " << (nSamples - errors) << "/" << nSamples << " test samples." << std::endl;
 }
 
